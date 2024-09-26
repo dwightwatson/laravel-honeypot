@@ -40,11 +40,11 @@ class HoneypotServiceProvider extends PackageServiceProvider
 
     protected function registerBladeClasses(): void
     {
-        $this->callAfterResolving('view', static function (Factory $view) {
+        $this->callAfterResolving(Factory::class, function (Factory $view) {
             $view->composer('honeypot::honeypotFormFields', HoneypotViewComposer::class);
         });
 
-        $this->callAfterResolving('blade.compiler', static function (BladeCompiler $blade) {
+        $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade) {
             $blade->component('honeypot', HoneypotComponent::class);
             $blade->directive('honeypot', static fn () => "<?php echo view('honeypot::honeypotFormFields'); ?>");
         });
